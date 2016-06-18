@@ -8,6 +8,7 @@ def interval(a, b):
       return [b,a]
     else:
       return [a,b]
+
 def lower_bound(x):
     """Return the lower bound of interval x."""
     return min(x)
@@ -58,12 +59,21 @@ def div_interval(x, y):
 
     Division is implemented as the multiplication of x by the reciprocal of y.
 
-    >>> str_interval(div_interval(interval(-1, 2), interval(4, 8)))
+    >>> str_interval(div_interval(interval( -1, 2), interval(4, 8)))
     '-0.25 to 0.5'
     """
-    "*** YOUR CODE HERE ***"
+    def valid_interval_check(interval):
+      for digit in range(lower_bound(y), upper_bound(y) + 1):
+        assert digit != 0, "interval contains 0"
+      return True
+
+    valid_interval_check(y)
+      
     reciprocal_y = interval(1/upper_bound(y), 1/lower_bound(y))
     return mul_interval(x, reciprocal_y)
+print (str_interval(div_interval(interval(-1, 2), interval(4,0))))
+
+#3----------------------------
 
 def sub_interval(x, y):
     """Return the interval that contains the difference between any value in x
