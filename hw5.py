@@ -172,15 +172,22 @@ def has_prefix(s, prefix):
     return True
 x = link(3, link(4, link(6, link(6, empty))))
 
-print (has_prefix(x, link(4, empty)))
-print (has_prefix(x, link(3, link(4, empty))))
-print (has_prefix(x, empty))
-print (has_prefix(x,x))
-print (has_prefix(x,(link(2, empty), link(2, link(3, empty)))))
-
-
-def has_sublist(s, sublist):
-    """Returns whether sublist appears somewhere within linked list s.
+#print (has_prefix(x, link(4, empty)))
+#print (has_prefix(x, link(3, link(4, empty))))
+#print (has_prefix(x, empty))
+#print (has_prefix(x,x))
+#print (has_prefix(x,(link(2, empty), link(2, link(3, empty)))))
+##########################
+def flattens_list(linked_list):#makes a linked list into a regular python list
+    reg_list = []
+    if linked_list ==empty:
+        return []
+    while linked_list != empty:
+        reg_list.append(first(linked_list))
+        linked_list = rest(linked_list)
+    return reg_list
+def has_sublist(s, sub):
+    """Returns whether sub appears somewhere within linked list s.
 
     >>> has_sublist(empty, empty)
     True
@@ -201,9 +208,31 @@ def has_sublist(s, sublist):
     >>> has_sublist(x, link('A', x))
     False
     """
-    "*** YOUR CODE HERE ***"
+    flat_s = flattens_list(s)
+    flat_sub = flattens_list(sub)
+    if flat_sub ==[]:
+        return True
+    if len(flat_sub) > len(flat_s): 
+        return False
+    for index in range(0,len(flat_s) - len(flat_sub) + 1):
+        all_match = True
+        for x in range(0,len(flat_sub)):
+            if flat_sub[x] != flat_s[x+index]:
+                break
+            if x == len(flat_sub) - 1:
+                return True
+    return False
 
-def has_61A_gene(dna):
+aca = link('A', link('C', link('A', empty)))
+x = link('G', link('A', link('T', link('T', aca))))
+#print(has_sublist(x, empty)) #True
+#print(has_sublist(x, link('A', link('T', link('T', empty))))) #True
+#print(has_sublist(x, link('G', link('T', empty)))) #False
+#print(has_sublist(link(1, link(2, link(3, empty))), link(2, empty))) #True
+#print(has_sublist(x, link('A', x)))   #False
+
+##############################
+def has_61A_gene(dna): 
     """Returns whether linked list dna contains the CATCAT gene.
 
     >>> dna = link('C', link('A', link('T', empty)))
@@ -221,8 +250,17 @@ def has_61A_gene(dna):
     >>> has_61A_gene(end)
     False
     """
-    "*** YOUR CODE HERE ***"
+    # list('CATCAT') => ['C', ..., 'T']
+    catcat=link('C', link('A', link('T', link('C', link('A', link('T', empty))))))
+    return has_sublist(dna, catcat)
 
+
+end = link('T', link('C', link('A', link('T', link('G', empty)))))
+dna = link('G', link('T', link('A', link('C', link('A', end)))))
+print(has_61A_gene(dna))
+print(has_61A_gene(end))
+
+########################
 def make_withdraw(balance, password):
     """Return a password-protected withdraw function.
 
