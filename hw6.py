@@ -57,7 +57,28 @@ class VendingMachine(object):
         self.stock += quantity
         return "Current candy stock:{0}".format(self.stock)
 
+v = VendingMachine('candy', 10)
+print (v.vend())
+    #'Machine is out of stock.'
+print(v.restock(2))
+    #'Current candy stock: 2'
+print (v.vend())
+    #You must deposit $10 more.'
+print(v.deposit(7))
+    #'Current balance: $7'
+print (v.vend())
+    #'You must deposit $3 more.'
+print( v.deposit(5))
+    #'Current balance: $12'
+print (v.vend())
 
+    #'Here is your candy and $2 change.'
+print(v.deposit(10))
+    #'Current balance: $10'
+print (v.vend())
+    #'Here is your candy.'
+print(v.deposit(15))
+    #'Machine is out of stock. Here is your $15.'
 
 
 
