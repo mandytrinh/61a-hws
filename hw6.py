@@ -35,19 +35,23 @@ class VendingMachine(object):
         self.quantity = 0
 
     def vend(self):
-        if self.stock == 0:
+        if self.stock == 0 and self.balance ==0:
             return 'Machine is out of stock.'
         if self.cost > self.balance:
             return 'You must deposit ${0} more'.format(self.cost - self.balance)
         else:
             if self.balance == self.cost and self.stock !=0:
+                self.stock = 0
                 return 'Here is your candy.'
             if self.balance > self.cost and self.stock !=0:
+                self.stock = 0
                 self.balance = self.balance - self.cost
                 return 'Here is your candy and ${0} change'.format(self.balance - self.cost)
             if self.balance >= self.cost and self.stock ==0:
+                self.stock = 0
                 return 'Machine is out of stock. Here is your ${0}'.format(self.balance)
-
+            #self.stock = 0
+            #self.balance = self.balance - self.cost
 
     def deposit(self,dollar_amount):
         self.balance +=dollar_amount
