@@ -46,7 +46,7 @@ class VendingMachine(object):
                 self.balance = self.balance - self.cost
                 return 'Here is your candy and ${0} change'.format(self.balance - self.cost)
             if self.balance >= self.cost and self.stock ==0:
-                return 'Machine is out of stock. Here is your ${0}'
+                return 'Machine is out of stock. Here is your ${0}'.format(self.balance)
 
 
     def deposit(self,dollar_amount):
