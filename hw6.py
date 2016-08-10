@@ -46,7 +46,7 @@ class VendingMachine(object):
             if self.balance > self.cost and self.stock !=0:
                 self.stock = 0
                 self.balance = self.balance - self.cost
-                return 'Here is your candy and ${0} change'.format(self.balance - self.cost)
+                return 'Here is your candy and ${0} change'.format(self.balance)
             if self.balance >= self.cost and self.stock ==0:
                 self.stock = 0
                 return 'Machine is out of stock. Here is your ${0}'.format(self.balance)
@@ -55,7 +55,7 @@ class VendingMachine(object):
 
     def deposit(self,dollar_amount):
         self.balance +=dollar_amount
-        return "Current balance:${0}".format(self.balance)
+        return "Current balance:${0}".format(dollar_amount)
 
     def restock(self,quantity):
         self.stock += quantity
