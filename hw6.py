@@ -5,7 +5,7 @@
 class VendingMachine(object):
     """A vending machine that vends some product for some price.
 
-    >>> v = VendingMachine('candy', 10)
+    >>> v = VendingMachine('candy', 10) #10 is the cost
     >>> v.vend()
     'Machine is out of stock.'
     >>> v.restock(2)
@@ -37,56 +37,66 @@ class VendingMachine(object):
     def vend(self):
         if self.stock == 0 and self.balance ==0:
             return 'Machine is out of stock.'
-        if self.cost > self.balance:
+
+       # elif self.balance >= self.cost and self.stock ==0:
+        #    bal = self.balance
+         #   self.balance = 0
+          #  return 'Machine is out of stock. Here is your ${0}'.format(bal)
+
+        elif self.cost > self.balance:
             return 'You must deposit ${0} more'.format(self.cost - self.balance)
-        else:
-            if self.balance == self.cost and self.stock !=0:
-                self.stock = 0
-                return 'Here is your candy.'
-            if self.balance > self.cost and self.stock !=0:
-                self.stock = 0
-                self.balance = self.balance - self.cost
-                return 'Here is your candy and ${0} change'.format(self.balance)
-            if self.balance >= self.cost and self.stock ==0:
-                self.stock = 0
-                return 'Machine is out of stock. Here is your ${0}'.format(self.balance)
-            #self.stock = 0
-            #self.balance = self.balance - self.cost
+
+        elif self.balance == self.cost and self.stock !=0:
+            self.stock = self.stock - 1
+            #TODO - REVIEW CHANGE BELOW
+            self.balance = 0
+            return 'Here is your candy.'
+
+        elif self.balance > self.cost and self.stock !=0:
+            #TODO - REVIEW CHANGE BELOW
+            self.stock = self.stock - 1
+            net_bal = self.balance - self.cost
+            self.balance = 0
+            return 'Here is your candy and ${0} change'.format(net_bal)
 
     def deposit(self,dollar_amount):
-        self.balance +=dollar_amount
-        return "Current balance:${0}".format(dollar_amount)
+        self.balance += dollar_amount
+        if self.stock == 0: #tests if there is nothing, then rejects deposit
+            bal = self.balance
+            self.balance = 0
+            return 'Machine is out of stock. Here is your ${0}.'.format(bal)
+        return "Current balance: ${0}".format(dollar_amount)
 
     def restock(self,quantity):
         self.stock += quantity
-        return "Current candy stock:{0}".format(self.stock)
+        return "Current candy stock: {0}".format(self.stock)
 
 v = VendingMachine('candy', 10)
-print (v.vend())
+print ("1", v.vend())
     #'Machine is out of stock.'
-print(v.restock(2))
+print('2', v.restock(2))
     #'Current candy stock: 2'
-print (v.vend())
+print ('3', v.vend())
     #You must deposit $10 more.'
-print(v.deposit(7))
+print('4',v.deposit(7))
     #'Current balance: $7'
-print (v.vend())
+print ('5',v.vend())
     #'You must deposit $3 more.'
-print( v.deposit(5))
+print( '6', v.deposit(5))
     #'Current balance: $12'
-print (v.vend())
+print ('7', v.vend())
 
     #'Here is your candy and $2 change.'
-print(v.deposit(10))
+print('8', v.deposit(10))
     #'Current balance: $10'
-print (v.vend())
+print ('9', v.vend())
     #'Here is your candy.'
-print(v.deposit(15))
+print('10', v.deposit(15))
     #'Machine is out of stock. Here is your $15.'
 
 
 
-
+#Problem 2
 
 class MissManners(object):
     """A container class that only forward messages that say please.
