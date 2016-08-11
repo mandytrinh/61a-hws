@@ -257,10 +257,10 @@ def has_61A_gene(dna):
 
 end = link('T', link('C', link('A', link('T', link('G', empty)))))
 dna = link('G', link('T', link('A', link('C', link('A', end)))))
-print(has_61A_gene(dna))
-print(has_61A_gene(end))
+#print(has_61A_gene(dna))
+#print(has_61A_gene(end))
 
-########################
+##########4##############
 def make_withdraw(balance, password):
     """Return a password-protected withdraw function.
 
@@ -284,8 +284,31 @@ def make_withdraw(balance, password):
     >>> w(10, 'l33t')
     "Your account is locked. Attempts: ['hwat', 'a', 'n00b']"
     """
-    "*** YOUR CODE HERE ***"
+    attempts_lst = []
+    def withdraw_check(amount,pw_input):
+        if len(attempts_lst) >= 3:
+            return "Your account is locked. Attempts: {0}".format([attempts_lst])
+        if pw_input != password:
+            attempts_lst.append(pw_input)
+            return "Incorrect password"
+        else:
+            nonlocal balance
+            if amount > balance:
+                return "Insufficient funds"
+            balance = balance - amount
+            return balance
+    return withdraw_check
+w = make_withdraw(100, 'hax0r')
+#print(w(25, 'hax0r'))
+#print(w(90, 'hax0r'))
+#print(w(25, 'hwat'))
+#print(w(25, 'hax0r'))
+#print(w(75, 'a'))
+#print(w(10, 'hax0r'))
+#print(w(20, 'n00b'))
+#print(w(10, 'hax0r'))
 
+ #########5############
 def make_joint(withdraw, old_password, new_password):
     """Return a password-protected withdraw function that has joint access to
     the balance of withdraw.
@@ -324,7 +347,21 @@ def make_joint(withdraw, old_password, new_password):
     >>> make_joint(w, 'hax0r', 'hello')
     "Your account is locked. Attempts: ['my', 'secret', 'password']"
     """
-    "*** YOUR CODE HERE ***"
+    c = withdraw(0, old_password)
+    if type(c) == str:
+        return c
+ 
+    def helper(amount, pw_guess):
+        if pw_guess == new_password:
+            return withdraw(amount,old_password)
+        else:
+            
+            return withdraw(amount,pw_guess)
+    return helper
+            
+print (make_joint(w, 'my', 'secret'))
+
+
 
 
 ######################
