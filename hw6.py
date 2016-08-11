@@ -95,10 +95,10 @@ print('10', v.deposit(15))
     #'Machine is out of stock. Here is your $15.'
 
 
-
+print ('*****************PROBLEM 2 BEGINS***********************')
 #Problem 2
 
-class MissManners(object):
+class MissManners(VendingMachine):
     """A container class that only forward messages that say please.
 
     >>> v = VendingMachine('teaspoon', 10)
@@ -134,8 +134,49 @@ class MissManners(object):
     >>> fussy_three.ask('please __add__', 4)
     7
     """
-    "*** YOUR CODE HERE ***"
+    def __init__(self,request, *args):
+        self.request = request
+    def ask (self,request, *args):
+        acceptable = ['please vend', 'please deposit']
+        if request not in acceptable:
+            return 'Thanks for asking, but I know not how to {0}'.format(request)
+        elif request == 'please vend':
+            return self.vend
+        elif request == 'please deposit':
+            return self.deposit
 
+v = VendingMachine('teaspoon', 10)
+v.restock(2)
+    #'Current teaspoon stock: 2'
+m = MissManners(v)
+print(m.ask('vend'))
+    #'You must learn to say please first.'
+print(m.ask('please vend'))
+    #'You must deposit $10 more.'
+print (m.ask('please deposit', 20))
+    #'Current balance: $20'
+print (m.ask('now will you vend?'))
+    #'You must learn to say please first.'
+print (m.ask('please hand over a teaspoon'))
+    #'Thanks for asking, but I know not how to hand over a teaspoon'
+print (m.ask('please vend'))
+    #'Here is your teaspoon and $10 change.'
+really_fussy = MissManners(m)
+print (really_fussy.ask('deposit', 10))
+    #'You must learn to say please first.'
+print (really_fussy.ask('please deposit', 10))
+    #'Thanks for asking, but I know not how to deposit'
+print (really_fussy.ask('please please deposit', 10))
+    #'Thanks for asking, but I know not how to please deposit'
+print(really_fussy.ask('please ask', 'please deposit', 10))
+    #'Current balance: $10'
+fussy_three = MissManners(3)
+print(fussy_three.ask('add', 4))
+    #'You must learn to say please first.'
+print (fussy_three.ask('please add', 4))
+    #'Thanks for asking, but I know not how to add'
+print (fussy_three.ask('please __add__', 4))
+    #7
 
 ##########################################
 #           Challenge Problem            #
