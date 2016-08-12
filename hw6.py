@@ -4,10 +4,7 @@
 
 class VendingMachine(object):
     """A vending machine that vends some product for some price.
-
-    >>> v = VendingMachine('candy', 10) #10 is the cost
-    >>> v.vend()
-    'Machine is out of stock.'
+>>> v = VendingMachine('candy', 10) #10 is the cost >>> v.vend() 'Machine is out of stock.'
     >>> v.restock(2)
     'Current candy stock: 2'
     >>> v.vend()
@@ -98,7 +95,7 @@ print('10', v.deposit(15))
 print ('*****************PROBLEM 2 BEGINS***********************')
 #Problem 2
 
-class MissManners(VendingMachine):
+class MissManners(object):
     """A container class that only forward messages that say please.
 
     >>> v = VendingMachine('teaspoon', 10)
@@ -134,16 +131,17 @@ class MissManners(VendingMachine):
     >>> fussy_three.ask('please __add__', 4)
     7
     """
-    def __init__(self,request, *args):
-        self.request = request
+    def __init__(self,instance, *args):
+        self.instance = instance
+
     def ask (self,request, *args):
         acceptable = ['please vend', 'please deposit']
         if request not in acceptable:
             return 'Thanks for asking, but I know not how to {0}'.format(request)
         elif request == 'please vend':
-            return self.vend
+            return self.instance.vend()
         elif request == 'please deposit':
-            return self.deposit
+            return self.instance.deposit
 
 v = VendingMachine('teaspoon', 10)
 v.restock(2)
