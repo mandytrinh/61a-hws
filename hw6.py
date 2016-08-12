@@ -4,7 +4,6 @@
 
 class VendingMachine(object):
     """A vending machine that vends some product for some price.
-
     >>> v = VendingMachine('candy', 10) #10 is the cost
     >>> v.vend()
     'Machine is out of stock.'
@@ -95,12 +94,11 @@ print('10', v.deposit(15))
     #'Machine is out of stock. Here is your $15.'
 
 
-
+print ('*****************PROBLEM 2 BEGINS***********************')
 #Problem 2
 
-class MissManners(object):
+class MissManners(VendingMachine):
     """A container class that only forward messages that say please.
-
     >>> v = VendingMachine('teaspoon', 10)
     >>> v.restock(2)
     'Current teaspoon stock: 2'
@@ -134,8 +132,49 @@ class MissManners(object):
     >>> fussy_three.ask('please __add__', 4)
     7
     """
-    "*** YOUR CODE HERE ***"
+    def __init__(self,request, *args):
+        self.request = request
+    def ask (self,request, *args):
+        acceptable = ['please vend', 'please deposit']
+        if request not in acceptable:
+            return 'Thanks for asking, but I know not how to {0}'.format(request)
+        elif request == 'please vend':
+            return self.vend
+        elif request == 'please deposit':
+            return self.deposit
 
+v = VendingMachine('teaspoon', 10)
+v.restock(2)
+    #'Current teaspoon stock: 2'
+m = MissManners(v)
+print('1',m.ask('vend'))
+    #'You must learn to say please first.'
+print('2',m.ask('please vend'))
+    #'You must deposit $10 more.'
+print ('3',m.ask('please deposit', 20))
+    #'Current balance: $20'
+print ('4',m.ask('now will you vend?'))
+    #'You must learn to say please first.'
+print ('5',m.ask('please hand over a teaspoon'))
+    #'Thanks for asking, but I know not how to hand over a teaspoon'
+print ('6',m.ask('please vend'))
+    #'Here is your teaspoon and $10 change.'
+really_fussy = MissManners(m)
+print ('7',really_fussy.ask('deposit', 10))
+    #'You must learn to say please first.'
+print ('8',really_fussy.ask('please deposit', 10))
+    #'Thanks for asking, but I know not how to deposit'
+print ('9',really_fussy.ask('please please deposit', 10))
+    #'Thanks for asking, but I know not how to please deposit'
+print('10',really_fussy.ask('please ask', 'please deposit', 10))
+    #'Current balance: $10'
+fussy_three = MissManners(3)
+print('11',fussy_three.ask('add', 4))
+    #'You must learn to say please first.'
+print ('12',fussy_three.ask('please add', 4))
+    #'Thanks for asking, but I know not how to add'
+print ('13',fussy_three.ask('please __add__', 4))
+    #7
 
 ##########################################
 #           Challenge Problem            #
@@ -169,7 +208,6 @@ def bind_method(value, instance):
 
 def make_class(attributes, base_classes=()):
     """Return a new class with attributes.
-
     attributes -- class attributes
     base_classes -- a sequence of classes
     """
@@ -214,7 +252,6 @@ Account = make_account_class()
 
 def make_checking_account_class():
     """Return the CheckingAccount class, which imposes a $1 withdrawal fee.
-
     >>> checking = CheckingAccount['new']('Jack')
     >>> checking['get']('interest')
     0.01
@@ -236,7 +273,6 @@ CheckingAccount = make_checking_account_class()
 
 def make_savings_account_class():
     """Return the SavingsAccount class, which imposes a $2 deposit fee.
-
     >>> savings = SavingsAccount['new']('Jack')
     >>> savings['get']('interest')
     0.02
@@ -257,7 +293,6 @@ SavingsAccount = make_savings_account_class()
 
 def make_as_seen_on_tv_account_class():
     """Return an account with lots of fees and a free dollar.
-
     >>> such_a_deal = AsSeenOnTVAccount['new']('Jack')
     >>> such_a_deal['get']('balance')
     1
@@ -275,5 +310,3 @@ def make_as_seen_on_tv_account_class():
     return make_class(locals(), [CheckingAccount, SavingsAccount])
 
 AsSeenOnTVAccount = make_as_seen_on_tv_account_class()
-
-
