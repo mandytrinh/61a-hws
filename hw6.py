@@ -7,6 +7,7 @@ class VendingMachine(object):
     >>> v = VendingMachine('candy', 10) #10 is the cost
     >>> v.vend()
     'Machine is out of stock.'
+
     >>> v.restock(2)
     'Current candy stock: 2'
     >>> v.vend()
@@ -132,16 +133,28 @@ class MissManners(VendingMachine):
     >>> fussy_three.ask('please __add__', 4)
     7
     """
+<<<<<<< HEAD
     def __init__(self,request, *args):
         self.request = request
+=======
+    def __init__(self,instance, *args):
+        self.instance = instance
+
+>>>>>>> 8bff69a76b701caf1cd56231a557ffbc1e270d65
     def ask (self,request, *args):
         acceptable = ['please vend', 'please deposit']
         if request not in acceptable:
             return 'Thanks for asking, but I know not how to {0}'.format(request)
         elif request == 'please vend':
+<<<<<<< HEAD
             return self.vend
         elif request == 'please deposit':
             return self.deposit
+=======
+            return self.instance.vend()
+        elif request == 'please deposit':
+            return self.instance.deposit
+>>>>>>> 8bff69a76b701caf1cd56231a557ffbc1e270d65
 
 v = VendingMachine('teaspoon', 10)
 v.restock(2)
