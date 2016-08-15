@@ -7,7 +7,6 @@ class VendingMachine(object):
     >>> v = VendingMachine('candy', 10) #10 is the cost
     >>> v.vend()
     'Machine is out of stock.'
-
     >>> v.restock(2)
     'Current candy stock: 2'
     >>> v.vend()
@@ -48,12 +47,10 @@ class VendingMachine(object):
 
         elif self.balance == self.cost and self.stock !=0:
             self.stock = self.stock - 1
-            #TODO - REVIEW CHANGE BELOW
             self.balance = 0
             return 'Here is your candy.'
 
         elif self.balance > self.cost and self.stock !=0:
-            #TODO - REVIEW CHANGE BELOW
             self.stock = self.stock - 1
             net_bal = self.balance - self.cost
             self.balance = 0
@@ -98,7 +95,7 @@ print('10', v.deposit(15))
 print ('*****************PROBLEM 2 BEGINS***********************')
 #Problem 2
 
-class MissManners(VendingMachine):
+class MissManners(object):
     """A container class that only forward messages that say please.
     >>> v = VendingMachine('teaspoon', 10)
     >>> v.restock(2)
@@ -133,28 +130,30 @@ class MissManners(VendingMachine):
     >>> fussy_three.ask('please __add__', 4)
     7
     """
-<<<<<<< HEAD
-    def __init__(self,request, *args):
-        self.request = request
-=======
-    def __init__(self,instance, *args):
-        self.instance = instance
+    def __init__(self, parameter, *args):
+        self.parameter = parameter
 
->>>>>>> 8bff69a76b701caf1cd56231a557ffbc1e270d65
     def ask (self,request, *args):
-        acceptable = ['please vend', 'please deposit']
-        if request not in acceptable:
-            return 'Thanks for asking, but I know not how to {0}'.format(request)
-        elif request == 'please vend':
-<<<<<<< HEAD
-            return self.vend
-        elif request == 'please deposit':
-            return self.deposit
-=======
-            return self.instance.vend()
-        elif request == 'please deposit':
-            return self.instance.deposit
->>>>>>> 8bff69a76b701caf1cd56231a557ffbc1e270d65
+        split_request = request.split()
+        starts_with_please = ('please' == split_request[0])
+        rest_of_request = ' '.join(split_request[1:])
+        if not starts_with_please:
+            return "You must learn to say please first."
+        if hasattr(self.parameter, rest_of_request): #if there is an attribute in rest_of_request
+            instance_function = getattr(self.parameter ,rest_of_request)
+            result = instance_function(*args)
+            return result
+        else:
+            return 'Thanks for asking, but I know not how to {0}'\
+                    .format(rest_of_request)
+
+
+            
+                
+        # elif request == 'please vend':
+            # return getattr(VendingMachine,vend)
+        # elif request == 'please deposit':
+            # return getattr(vendingmachine,deposit)
 
 v = VendingMachine('teaspoon', 10)
 v.restock(2)
@@ -323,3 +322,4 @@ def make_as_seen_on_tv_account_class():
     return make_class(locals(), [CheckingAccount, SavingsAccount])
 
 AsSeenOnTVAccount = make_as_seen_on_tv_account_class()
+
