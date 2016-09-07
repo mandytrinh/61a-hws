@@ -99,3 +99,32 @@ def filter(pred, lst):
         return link(first(lst)), filter(pred,rest(lst)))
     else:
         return filter(pred, rest(lst))
+
+##########################################
+#             TREES REVIEW               #
+##########################################
+def tree(root, subtrees=[]):
+    return [root] + list(subtrees)
+
+def root(t):
+    return t[0]
+
+def subtrees(t):
+    return t[1:]
+
+def is_leaf(t):#check if t has no or empty subtrees
+    return not subtrees(t)
+
+#Implement a function contains, which takes a tree t and an element e. contains will return True if t contains the element e, and False otherwise.
+def contains(t, e):
+    # return ( e == root(t)) or any(map(lamda tree: contains(tree, e), subtrees(t))
+    if e == root(t):
+        return True
+    elif is_leaf(t):
+        return False
+    else:
+        for tree in subtrees(t):
+            if contains(tree,e):
+                return True
+    return False
+                               
