@@ -128,3 +128,21 @@ def contains(t, e):
                 return True
     return False
                                
+#################################
+#Question 2
+
+#Implement a function all_paths, which takes a tree t. all_paths will return a list of paths from the root to each leaf. For example, consider the following tree:
+
+#   5
+# /  \
+# 3   6
+# / \
+# 2  1
+
+# Calling all_paths on this tree would return
+
+# [[5, 3, 2],
+         # [5, 3, 1],
+          # [5, 6]    ]
+
+
