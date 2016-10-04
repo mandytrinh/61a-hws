@@ -1,0 +1,39 @@
+    ======  ======
+    Time:10/3/2016 3:51:56 PM
+    Title: Initiate log
+    Message: 
+    Time:10/3/2016 3:51:56 PM
+    Title: Initiate InternalManager
+    Message: Trying to Validate License
+    Time:10/3/2016 3:51:56 PM
+    Title: Requesting EVT
+    Message: EVTP
+    Time:10/3/2016 3:51:56 PM
+    Title: Requesting Validation
+    Message: ILMValidate
+    Time:10/3/2016 3:51:56 PM
+    Title: LICENSER
+    Message: TRL MODE
+    Time:10/3/2016 3:51:56 PM
+    Title: LICENSER
+    Message: DS LEFT12
+    Time:10/3/2016 3:51:56 PM
+    Title: LICENSER
+    Message: DT MARK PASSED12.00:00:00
+    Time:10/3/2016 3:52:02 PM
+    Title: Requesting Validation
+    Message: ILMValidate True
+    Time:10/3/2016 3:52:02 PM
+    Title: Requesting Validation
+    Message: ILMValidate True Trial
+    Time:10/3/2016 3:52:02 PM
+    Title: LICENSER
+    Message: READ REGS START
+    Time:10/3/2016 3:52:02 PM
+    Title: LIC EXP_KEY
+    Message: NULL
+    Time:10/3/2016 3:52:02 PM
+    Title: LICENSER
+    Message: READ REGS SUCCESS
+    Entering constructor for: Telerik.CommonPackage.Telerik_CommonPackagePackage
+    Entering Initialize() of: Telerik.CommonPackage.Telerik_CommonPackagePackage

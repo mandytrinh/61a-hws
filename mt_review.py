@@ -81,6 +81,7 @@ r = link(1, link(2, link(3, empty)))
 print(link_to_list(alternate(r)))
 r = link(1, link(2, link(3,link(4, link(5, empty))))) 
 print(link_to_list(alternate(r)))
+
 ###########################################
 
 def filter(pred, lst):
@@ -114,8 +115,12 @@ def subtrees(t):
 
 def is_leaf(t):#check if t has no or empty subtrees
     return not subtrees(t)
+#################################
+#Question 1
+#Implement a function contains, which takes a tree t and an element e. 
+#contains will return True if t contains the element e, and False otherwise.
 
-#Implement a function contains, which takes a tree t and an element e. contains will return True if t contains the element e, and False otherwise.
+
 def contains(t, e):
     # return ( e == root(t)) or any(map(lamda tree: contains(tree, e), subtrees(t))
     if e == root(t):
@@ -131,7 +136,9 @@ def contains(t, e):
 #################################
 #Question 2
 
-#Implement a function all_paths, which takes a tree t. all_paths will return a list of paths from the root to each leaf. For example, consider the following tree:
+#Implement a function all_paths, which takes a tree t. 
+#all_paths will return a list of paths from the root to each leaf.
+# For example, consider the following tree:
 
 #   5
 # /  \
@@ -142,7 +149,16 @@ def contains(t, e):
 # Calling all_paths on this tree would return
 
 # [[5, 3, 2],
-         # [5, 3, 1],
-          # [5, 6]    ]
+# [5, 3, 1],
+# [5, 6]    ]
 
-
+def all_paths(t):
+	if is_leaf(t):
+		return [[root(t)]]
+	else:
+		total = []
+		for tree in subtrees(t):
+			for path in all_paths(tree):
+				total.append([root(t)] + path)
+		return total 
+	
