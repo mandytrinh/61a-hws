@@ -1,13 +1,13 @@
 empty = None
 
 def link(first, rest=empty):
-        return [first, rest]
+    return [first, rest]
 
 def first(s):
     return s[0]
 
 def rest(s):
-        return s[1]
+	return s[1]
 ###################################
 def link_to_list(lst):
     """Returns a list that contains the same elements as the
@@ -51,7 +51,7 @@ def RegList_to_LinkList(lst):
 
     return helper(lst)
 
-print(RegList_to_LinkList([1,2,3]))
+#print(RegList_to_LinkList([1,2,3]))
 
 ###############################
 
@@ -78,9 +78,9 @@ def alternate(lst):
     return linked_alternated_elements
 
 r = link(1, link(2, link(3, empty)))
-print(link_to_list(alternate(r)))
+#print(link_to_list(alternate(r)))
 r = link(1, link(2, link(3,link(4, link(5, empty))))) 
-print(link_to_list(alternate(r)))
+#print(link_to_list(alternate(r)))
 
 ###########################################
 
@@ -97,7 +97,7 @@ def filter(pred, lst):
     """
     if lst == empty: return []
     elif pred(first(lst)):
-        return link(first(lst)), filter(pred,rest(lst)))
+        return link(first(lst), filter(pred,rest(lst)))
     else:
         return filter(pred, rest(lst))
 
@@ -153,6 +153,7 @@ def contains(t, e):
 # [5, 6]    ]
 
 def all_paths(t):
+	
 	if is_leaf(t):
 		return [[root(t)]]
 	else:
@@ -162,3 +163,43 @@ def all_paths(t):
 				total.append([root(t)] + path)
 		return total 
 	
+##########################################
+#        DICTIONARY REVIEW               #
+##########################################
+
+#Implement a function stem_and_leaf, which takes a sorted list of integers 
+#and a multiple of 10 called leaf_max. stem_and_leaf will create a stem-and-leaf plot where 
+#the leaves are numbers less than the leaf_max (e.g. if leaf_max == 100,
+# the leaves must all be less than 100: 34, 1, and 99 are valid leaves, but 100 and 101 are not). 
+#stem_and_leaf should return a dictionary, where the keys are stems and values are lists of leaves.
+# For example:
+#stem_and_leaf([7, 31, 365, 365, 3650], 100)
+#{
+# 0: [7, 31],
+#  3: [65, 65],
+#   36: [50],
+#}
+
+def stem_and_leaf(lst, leaf_max):
+	plot = {}
+	for num in lst:
+		left_stem = num // leaf_max #e.g - 365//100 = 3
+		right_leaf = num % leaf_max #e.g - 365 % 100 = 65
+		if left_stem not in plot:
+			plot[left_stem] = []
+		plot[left_stem].append(right_leaf)
+	return plot
+	
+#Implement a function one_to_one, which takes a dictionary d and returns True 
+#if every value in d only has one corresponding key. See the doctests for more details.	
+def one_to_one(d):
+	starting_num = d[d.keys()[0]]  
+	for value in d.itervalues():
+		if starting_num == value:
+			return False
+	return True
+	
+fail = {'a': 2, 'b': 4, 'c': 2}
+print(one_to_one(fail))
+#False
+
