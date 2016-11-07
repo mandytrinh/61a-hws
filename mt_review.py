@@ -1,13 +1,13 @@
 empty = None
 
 def link(first, rest=empty):
-        return [first, rest]
+    return [first, rest]
 
 def first(s):
     return s[0]
 
 def rest(s):
-        return s[1]
+    return s[1]
 ###################################
 def link_to_list(lst):
     """Returns a list that contains the same elements as the
@@ -51,7 +51,7 @@ def RegList_to_LinkList(lst):
 
     return helper(lst)
 
-print(RegList_to_LinkList([1,2,3]))
+# print(RegList_to_LinkList([1,2,3]))
 
 ###############################
 
@@ -77,10 +77,10 @@ def alternate(lst):
     linked_alternated_elements = RegList_to_LinkList(alternated_elements)
     return linked_alternated_elements
 
-r = link(1, link(2, link(3, empty)))
-print(link_to_list(alternate(r)))
-r = link(1, link(2, link(3,link(4, link(5, empty))))) 
-print(link_to_list(alternate(r)))
+# r = link(1, link(2, link(3, empty)))
+# print(link_to_list(alternate(r)))
+# r = link(1, link(2, link(3,link(4, link(5, empty))))) 
+# print(link_to_list(alternate(r)))
 
 ###########################################
 
@@ -153,12 +153,81 @@ def contains(t, e):
 # [5, 6]    ]
 
 def all_paths(t):
-	if is_leaf(t):
-		return [[root(t)]]
-	else:
-		total = []
-		for tree in subtrees(t):
-			for path in all_paths(tree):
-				total.append([root(t)] + path)
-		return total 
-	
+    if is_leaf(t):
+        return [[root(t)]]
+    else:
+        total = []
+        for tree in subtrees(t):
+            for path in all_paths(tree):
+                total.append([root(t)] + path)
+        return total 
+
+##################################################
+#           Object Oriented Programming         #
+#################################################
+
+# Write a Chef class with the following qualities:
+# 
+# Each Chef is initialized with a list of required ingredients. Each item in the list is added to a storage that is shared by all the Chefs with an initial stock of 2. If the item is already in the storage, do NOT add it in again.
+# Each Chef can fetch_ingredients from a storage that is shared by all the Chefs. Each Chef only needs 1 of each ingredient.
+# Each Chef can serve, where they put their finished food in a shared list of finished foods.
+
+# >>> albert = Chef('quiche', ['egg', 'cheese', 'cream', 'salt'])
+# >>> ramsay = Chef('steak', ['meat', 'bbq sauce', 'salt'])
+# >>> ramsay.cook()
+# 'Not enogh ingredients!'
+# >>> ramsay.serve()
+# 'No food to serve!'
+# >>> ramsay.fetch_ingredients()     # 1 salt remaining
+# "Fetched: ['meat', 'bbq sauce', 'salt']"
+# >>> ramsay.cook()
+# 'Cooked steak!'
+# >>> ramsay.serve()
+# >>> Chef.finished
+# ['steak']
+# >>> albert.fetch_ingredients()     # 0 salt remaining
+# "Fetched: ['egg', 'cheese', 'cream', 'salt']"
+# # >>> albert.cook()
+# 'Cooked quiche!'
+# >>> albert.serve()
+# >>> Chef.finished
+# ['steak', 'quiche']
+# >>> ramsay.fetch_ingredients()
+# 'No more salt!'
+# """
+
+Class Chef:
+    storage = {}
+    finished = []
+
+    def __init__(self, entree, food_list):
+        self.fetched = False
+        self.cooked = False
+        for food in food_list:
+            if food not in storage:
+                storage[food] = 2
+    
+    def fetched_ingredients(self):
+        ingred = []
+        for each_item in food_list:
+            if each_item not in self.storage or self.storage[each_item] == 0:
+                return "No more {0}!".format(each_item)
+            else:
+                ingred.append(each_item)
+                self.storage[each_item] -= 1
+        self.fetched = True
+        print "Fetched:{0}".format(ingred)        
+
+    def cook(self):
+        if self.fetched == False:
+            return "Not enough ingredients!"
+        else:
+            self.cook = True
+            return "Cooked{0}!".format(self.entree)
+
+    def serve(self):
+        if self.cook == False:
+            return "No food to serve!"
+        else:
+            self.finished.append(entree)
+
