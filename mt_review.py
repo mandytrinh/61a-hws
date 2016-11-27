@@ -1,3 +1,6 @@
+# We will be using the following implementation of immutable linked lists.
+# Keep in mind that your code should not depend on the assumption that links are implemented as lists — preserve data abstraction!
+
 empty = None
 
 def link(first, rest=empty):
@@ -8,7 +11,9 @@ def first(s):
 
 def rest(s):
     return s[1]
+
 ###################################
+
 def link_to_list(lst):
     """Returns a list that contains the same elements as the
         linked list.
@@ -22,7 +27,9 @@ def link_to_list(lst):
         return [] 
     else:
         return [first(lst)] + link_to_list(rest(lst))
+
 ########################################
+
 #Problem 2
 
 def map_link(lst, f):
@@ -37,7 +44,9 @@ def map_link(lst, f):
         return []
     else:
         return link((first(lst)), map_link(rest(lst), f))     
+
 ##############################
+
 def RegList_to_LinkList(lst):
     """turns a regular list into a linked list
     >>> RegList_to_LinkList([1,2,3])
@@ -97,7 +106,7 @@ def filter(pred, lst):
     """
     if lst == empty: return []
     elif pred(first(lst)):
-        return link(first(lst)), filter(pred,rest(lst)))
+        return link(first(lst)), filter(pred,rest(lst))
     else:
         return filter(pred, rest(lst))
 
@@ -115,7 +124,7 @@ def subtrees(t):
 
 def is_leaf(t):#check if t has no or empty subtrees
     return not subtrees(t)
-#################################
+
 #Question 1
 #Implement a function contains, which takes a tree t and an element e. 
 #contains will return True if t contains the element e, and False otherwise.
@@ -153,6 +162,7 @@ def contains(t, e):
 # [5, 6]    ]
 
 def all_paths(t):
+
     if is_leaf(t):
         return [[root(t)]]
     else:
@@ -196,38 +206,132 @@ def all_paths(t):
 # 'No more salt!'
 # """
 
-Class Chef:
+class Chef:
     storage = {}
     finished = []
 
     def __init__(self, entree, food_list):
         self.fetched = False
         self.cooked = False
-        for food in food_list:
-            if food not in storage:
-                storage[food] = 2
+        self.food_list, self.entree = food_list, entree
+        for each_item in self.food_list:
+            if each_item not in storage:
+                Chef.storage[each_item] = 2
     
-    def fetched_ingredients(self):
-        ingred = []
-        for each_item in food_list:
-            if each_item not in self.storage or self.storage[each_item] == 0:
-                return "No more {0}!".format(each_item)
-            else:
-                ingred.append(each_item)
-                self.storage[each_item] -= 1
+    def fetch_ingredients(self):
+        for each_item in self.food_list:
+            if Chef.storage[each_item] == 0:
+                return "No more" + each_item + "!"
+            Chef.storage[each_item] -= 1
         self.fetched = True
-        print "Fetched:{0}".format(ingred)        
+        return "Fetched: " + str(self.food_list)        
 
     def cook(self):
         if self.fetched == False:
             return "Not enough ingredients!"
         else:
-            self.cook = True
+            self.cooked = True
+            self.fetched = False
             return "Cooked{0}!".format(self.entree)
 
     def serve(self):
-        if self.cook == False:
+        if self.cooked == False:
             return "No food to serve!"
         else:
-            self.finished.append(entree)
+            Chef.finished.append(self.entree)
+        self.cooked = False
+
+##################################################
+#              MUTABLE LINKED LISTS             #
+#################################################
+
+class Link(object):
+    empty = ()
+
+    def __init__(self, first, rest=empty):
+        self.first = first
+        self.rest = rest
+
+    def __len__(self):
+        return 1 + len(self.rest)
+
+    def __getitem__(self, i):
+        if i == 0:
+            return self.first
+        return self.rest[i - 1]
+
+    def __repr__(self):
+        if self.rest is empty:
+            return 'Link({})'.format(repr(self.first))
+        return 'Link({}, {})'.format(repr(self.first),
+                                      repr(self.rest))
+
+# Implement a function seq_to_link, which takes any type of sequence (e.g. tuple, list) and converts it to a Link.
+	
+    # """Converts SEQ into an Link.
+    # >>> seq = [1, 2, 3, 4]
+    # >>> seq_to_link(seq)
+    # Link(1, Link(2, Link(3, Link(4))))
+    # >>> null = ()
+    # >>> seq_to_link(null) is Link.empty
+    # True
+    # """
+def seq_to_link(seq):
+    if not seq:
+        return Link.empty
+    return Link(seq[0], seq_to_link(seq[1:]))
+
+# Implement a function map_link, which takes a Link and a function fn, and applies fn to every element in the Link.
+# map_link should mutate the Link — do not return a new one!
+
+# >>> r = Link(1, Link(2, Link(3)))
+# >>> map_link(lambda x: x*x, r)
+# >>> r
+# Link(1, Link(4, Link(9)))
+
+def map_link(fn, lst): #lst is a Link list
+    while lst is not Link.empty:
+        lst = fn(lst.first)
+        lst = lst.rest
+
+#Implement a function validate, which takes a Link and returns True if the Link is valid.
+
+def validate(lst):
+    """Returns True if lst is a valid Link.
+
+    >>> lst = Link(1, Link(2, Link(3)))
+    >>> validate(lst)
+    True
+    >>> okay = Link(Link(1), Link(2))
+    >>> validate(okay)
+    True
+    >>> bad = Link(1, 2)
+    >>> validate(Link.empty)
+    True
+    """
+    if lst is Link.empty:
+        return True
+    elif lst.rest is not Link.empty and type(lst.rest) != Link:
+        return False
+    else:
+        return validate(lst.rest)
+
+# Implement a function count, which takes a Link and another value, and counts the number of times that value is found in the Link
+
+# >>> r = Link(3, Link(3, Link(2, Link(3))))
+# >>> count(r, 3)
+# 3
+# >>> count(r, 2)
+# 1
+
+def count(r, value):
+    counter = 0
+    if r is Link.empty:
+        return 0
+    else:
+        while r.rest is not Link.empty:
+            if r.first == value:
+                counter += 1
+            r = r.rest
+        return counter
 
