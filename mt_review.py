@@ -281,6 +281,15 @@ def seq_to_link(seq):
         return Link.empty
     return Link(seq[0], seq_to_link(seq[1:]))
 
+#iterative version:
+
+def seq_to_link(seq):
+    new_link = Link.empty
+    for elem in seq[::-1]:
+        new_link = Link(elem, new_link)
+    return new_link
+
+
 # Implement a function map_link, which takes a Link and a function fn, and applies fn to every element in the Link.
 # map_link should mutate the Link — do not return a new one!
 
@@ -329,9 +338,80 @@ def count(r, value):
     if r is Link.empty:
         return 0
     else:
-        while r.rest is not Link.empty:
+        while r is not Link.empty:
             if r.first == value:
                 counter += 1
             r = r.rest
         return counter
+
+#Implement a function extend_link, which takes two Links, s1 and s2, and mutates s1 such that it contains the elements of s2 at its tail. 
+# Do this mutatively — don't return anything! Also, make sure s2 itself does not get attached to s1. You may assume s1 always has at least one element.
+
+# >>> s1 = Link(1)
+# >>> s2 = Link(2, Link(3))
+# >>> extend_link(s1, s2)
+# >>> s1
+# Link(1, Link(2, Link(3)))
+# >>> s1.rest is not s2
+# True
+
+def extend_link(s1,s2):
+    if s2 is Link.empty:
+        return 
+    elif s1.rest is Link.empty:
+        s1.rest = Link(s2.first)
+        extend_link(s1.rest, s2.rest)
+    else:
+        extend_link(s1.rest,s2)
+
+##################################################
+#               INTERFACES                      #
+#################################################
+
+class DoubleList(object):
+    """See doctests for behavior.
+
+    >>> d = DoubleList([1, 2, 3])
+    >>> repr(d)
+    'DoubleList([1, 2, 3])'
+    >>> str(d)
+    '[1, 1, 2, 2, 3, 3]'
+    >>> d[2]
+    2
+    >>> d[3]
+    2
+    >>> d[4]
+    3
+    >>> len(d)
+    6
+    >>> d.append(4)
+    >>> str(d)
+    '[1, 1, 2, 2, 3, 3, 4, 4]'
+    """
+    def __init__(self, lst):
+        self.lst = lst
+
+    def __repr__(self):
+        return 'DoubleList(' + __repr__(self.lst) + ')'
+    
+    def __str__(self):
+        rep = '['
+        for each_elem in self.lst:
+            rep += '{0}, {0}, '.format(each_elem)
+        return rep[:-2] + ']' #this gets rid of the trailing ', ' at the end
+
+    def __append__(self, item):
+        return self.lst.append(item)
+
+    def __len__(self):
+        return 2 * len(self.lst)
+    
+    def __getitem__(self, index):
+        return self.lst[index // 2] #floor division rounds DOWN
+
+
+
+
+
+
 
