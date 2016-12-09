@@ -409,8 +409,33 @@ class DoubleList(object):
     def __getitem__(self, index):
         return self.lst[index // 2] #floor division rounds DOWN
 
+##################################################
+#               Practice exams                   #
+#################################################
 
+class Lawyer(object):
+    def __init__(self, s):
+        if len(s) < 2:
+            self.s = s
+        else:
+            self.s = Lawyer(s[2:])
 
+    def __repr__(self):
+        return 'Lawyer(' + repr(self.s) + ')'
+
+    def think(self):
+        if hasattr(self, 'decide'):
+            return self.decide()
+        while type(self.s) == Lawyer:
+            self.s = self.s.s
+        return self.s
+
+class CEO(Lawyer):
+    def decide(self):
+        return 'Denied'
+
+obama = Lawyer(['a','b', 'c'])
+romney = CEO(['x', 'y', 'z'])
 
 
 
