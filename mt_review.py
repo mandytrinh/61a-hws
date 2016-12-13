@@ -438,5 +438,117 @@ obama = Lawyer(['a','b', 'c'])
 romney = CEO(['x', 'y', 'z'])
 
 
+#The following is an object-oriented recursive list implementation:
 
+class Rlist(object):
+    class EmptyList(object):
+        def __len__(self):
+            return 0
+    empty = EmptyList()
 
+    def __repr__(self):
+        f = repr(self.first)
+        if self.rest is Rlist.empty:
+            return 'Rlist({0})'.format(f)
+        else:
+            return 'Rlist({0}, {1})'.format(f, repr(self.rest))
+
+    def __init__(self, first, rest=empty):
+        self.first = first
+        self.rest = rest
+
+    def __len__(self):
+        return 1 + len(self.rest)
+
+    def __getitem__(self, i):
+        if i == 0:
+            return self.first
+        return self.rest[i - 1]
+
+#Implement a mutating_map method that takes in a function and applies it to each element in an Rlist.
+#This method should mutate the list in place, replacing each element with the result of applying the function
+#to it. Do not create any new objects. You may assume that the input Rlist contains at least one element.
+
+    def mutating_map (self,fn ):
+
+        self.first = fn(self.first )
+        if self.rest != Rlist.empty :
+            self.rest.mutating_map(fn)
+
+###########################################
+
+n = 3
+def follow():
+    sunshine = 10
+    def x(n):
+        nonlocal sunshine
+        def y(fn):
+            nonlocal sunshine
+            sunshine = fn(sunshine) + n
+            return sunshine
+        sunshine += n
+        return y
+    return x(5)
+
+rain = follow()
+fall = rain(lambda x: x * n)
+
+#####################################
+#Mark is tired of having to dig around BearFacts to look up student information, so he wrote a script to create a
+#dictionary of student info. However, when he did so, he was sleep-deprived. As such, he accidentally swapped
+#the keys and the values! Now he’s stuck with a dictionary that maps any single piece of student information
+#to the student’s login:
+
+#>>> info['Eric Tzeng'] # info is mark's faulty dictionary
+#'cs61a-ta'
+#>>> info['eric.tzeng@berkeley.edu']
+#'cs61a-ta'
+
+#Mark is too tired to fix this, so you’ll have to do it for him. We’ll do this by writing a get_info function. It
+#should take a student login string and a faulty info dictionary as its two arguments and return a list containing
+#all of that student’s information. The returned list can contain a student’s information in any order, but it
+#must contain all of the information for a student found in the faulty dictionary.
+#>>> get_info('cs61a-ta', info)
+#['Eric Tzeng', 'eric.tzeng@berkeley.edu']
+
+#You may assume that no two students have duplicate information. However, you may not assume that names
+#and emails are the only pieces of information stored in the dictionary.
+
+def get_info(login, info_dict):
+    """
+    Retrieve student information based on the student's login, using the
+    provided (faulty) info_dict.
+    >>> mark_dict = {'Andrew Huang': 'cs61a-tf', 'awesomeandrew@example.com': 'cs61a-tf',
+    ... 'Robert Huang': 'cs61a-td', 'coolrob42@example.com': 'cs61a-td'}
+    >>> get_info('cs61a-td', mark_dict)
+    ['Robert Huang', 'coolrob42@example.com'] # order doesn't matter
+    >>> get_info('cs61a-tf', mark_dict)
+    ['awesomeandrew@example.com', 'Andrew Huang'] # order doesn't matter
+    """
+	student_info_list = []
+	for info, account in info_dict.item():
+		if account == login:
+			student_info_list.append(info)
+	return student_info_list
+
+#	Albert keeps all of his top secret information in a binary tree. This prevents the layperson from reading his
+#data. However, well trained computer scientists (such as you) can still access his information.
+#As a further layer of protection, Albert turns some of the nodes in his trees into Eert nodes. Eert nodes,
+#which have Tree as their base class, are like normal Tree nodes, except they swap their left and right branches.
+#(Albert settles for nothing less than the most advanced encryption techniques known to man.)
+#(a) (3 pt) Complete the __init__ method for the Eert class on the next page. Make sure to use inheritance
+#as much as possible. The Eert class should work as follows:
+#>>> e = Eert("61A account info",
+#... Tree("Username: cs61a-te"),
+#... Tree("Password: imsocool"))
+#>>> e.entry # unchanged
+#"61A account info"
+#>>> e.left.entry # swapped with right
+#"Password: imsocool"
+#>>> e.right.entry # sw
+#"Username: cs61a-te"
+class Tree(object):
+	def __init__(self, entry, left=None, right=None):
+		self.entry = entry
+		self.left = left
+		self.right = right	def decrypt(self):class Eert(Tree):	def __init__(self, entry, left=None, right=None)		Tree.__init__(self, entry, right, left) #this is switching the left and right returned values tree is called
