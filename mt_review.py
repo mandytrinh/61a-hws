@@ -546,9 +546,32 @@ def get_info(login, info_dict):
 #>>> e.left.entry # swapped with right
 #"Password: imsocool"
 #>>> e.right.entry # sw
-#"Username: cs61a-te"
+#"Username: cs61a-te"
+
 class Tree(object):
 	def __init__(self, entry, left=None, right=None):
 		self.entry = entry
 		self.left = left
-		self.right = right	def decrypt(self):class Eert(Tree):	def __init__(self, entry, left=None, right=None)		Tree.__init__(self, entry, right, left) #this is switching the left and right returned values tree is called
+		self.right = right
+	def decrypt(self):
+
+
+class Eert(Tree):
+	def __init__(self, entry, left=None, right=None)
+		Tree.__init__(self, entry, right, left) #this is switching the left and right returned values tree is called
+
+##################################################
+
+def miley(ray):
+	def cy():
+		def rus(billy):
+			nonlocal cy
+			cy = lambda: billy + ray
+			return (1,billy)
+		if len(rus(2)) == 1:
+			return (3,4)
+		else:
+			return (cy(), 5)
+	return cy()[1]
+billy = 6
+miley(7)
