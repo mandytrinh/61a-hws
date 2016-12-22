@@ -601,3 +601,26 @@ class RubberDuck ( Pet ):
 #A new pet!
 #print(p.name + q.name)
 #DaisyDaisy
+
+
+class SkipIterator :
+2	    """ Iterates over a range starting from the beginning and
+3	    skipping every nth element .
+4	    """
+5	    def __init__ ( self , rng , n ):
+6	        self . obj = rng
+7	        self . skip = n
+8	    def __iter__ ( self ):
+9	        return self
+10	    def __next__ ( self ):
+11	        result = self . obj . curr
+12	        self . obj . curr += self . skip
+13	        return result
+14	class SkippedNaturals :
+15	    """ Iterable class for positive integers . """
+16	    def __init__ ( self ):
+17	        self . curr = 0
+18	        self . skip = 1
+19	    def __iter__ ( self ):
+20	        return SkipIterator ( self , self . skip )
+21	        
