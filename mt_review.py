@@ -575,3 +575,29 @@ def miley(ray):
 	return cy()[1]
 billy = 6
 miley(7)
+
+class Pet:
+    color = "Red"
+    name = " Clifford "
+    def __init__ ( self , num_legs ):
+        print ("A new pet!")
+        self . num_legs = num_legs
+    def sleep ():
+        print (" Zzzz ")
+class RubberDuck ( Pet ):
+    color = " Yellow "
+    def __init__ ( self ):
+        self . voice = print (" Quack ")
+        Pet . name = " Daisy "
+        name = " Daffy "
+        self . num_legs = Pet (0). num_legs
+    def debug ( self ):
+        print (" What is wrong ?")
+        return self . voice
+
+#p = Pet(4)
+#q = RubberDuck()
+#Quack
+#A new pet!
+#print(p.name + q.name)
+#DaisyDaisy
