@@ -1,0 +1,32 @@
+Problem 1
+Define the procedures cadr and caddr,
+ which return the second and third elements 
+ of a list, respectively:
+(define (cadr s)
+   (car (cdr s)
+    )
+)
+
+(define (cddr s)
+  (cdr (cdr s)
+  )
+)
+
+(define (caddr s)
+  (car (cddr s)
+  )
+)
+
+Problem 2
+Using cond, define a procedure sign 
+that returns -1 for negative arguments, 
+0 for zero, and 1 for positive arguments:
+
+(define (sign x)
+       (cond
+         ((< x 0) -1)
+         ((> x 0) 1)
+         (else 'zero)
+       ))
+       
+Problem 3

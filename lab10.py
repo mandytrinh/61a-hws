@@ -23,24 +23,34 @@ class IteratorRestart:
     7
     """
     def __init__(self, start, end):
-		self.start = start
-		self.end = end
-		self.current = start
+        self.start = start
+        self.end = end
+        self.current = start
 
     def __next__(self):
         if self.current > self.end:
-			return StopIteration
-		self.current += 1
-		return self.current - 1
+            return StopIteration
+        self.current += 1
+        return self.current - 1
 
     def __iter__(self):
         self.current = self.start
-		return self
+        return self
 
 ##############
 # Generators #
 ##############
 
+def generator():
+    print("Starting here")
+    i = 0
+    while i < 6:
+        print("Before yield")
+        yield i
+        print("After yield")
+        i += 1
+        
+        
 def countdown(n):
     """
     >>> for number in countdown(5):
