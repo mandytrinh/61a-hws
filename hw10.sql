@@ -29,11 +29,13 @@ create table sizes as
 -------------------------------------------------------------
 
 
--- The names of all "toy" and "mini" dogs
+-- #1 The names of all "toy" and "mini" dogs.
 SELECT name FROM dogs AS d, sizes AS s 
 	WHERE d.height > s.min AND d.height <= s.max
 	AND s.size in ('mini', 'toy') 
 	ORDER BY d.name asc;
+
+
 -- Expected output:
 --   abraham
 --   eisenhower
@@ -41,8 +43,28 @@ SELECT name FROM dogs AS d, sizes AS s
 --   grover
 --   herbert
 
--- All dogs with parents ordered by decreasing height of their parent
-select "REPLACE THIS LINE WITH YOUR SOLUTION";
+-- Create a table dog_sizes for later use in #3
+CREATE TABLE dog_sizes AS
+	SELECT d.name, s.size FROM dogs AS d, sizes AS s 
+	WHERE d.height > s.min AND d.height <= s.max;
+
+--expected:
+-- name	size
+-- abraham	toy
+-- barack	standard
+-- clinton	standard
+-- delano	standard
+-- eisenhower	mini
+-- fillmore	mini
+-- grover	toy
+-- herbert	mini
+
+--#2 All dogs with parents ordered by decreasing height of their parent
+
+SELECT p.child from parents as p
+JOIN dogs as d
+ON d.name = p.parent 
+ORDER BY d.height desc;
 -- Expected output:
 --   herbert
 --   fillmore
@@ -53,7 +75,16 @@ select "REPLACE THIS LINE WITH YOUR SOLUTION";
 --   clinton
 
 -- Sentences about siblings that are the same size
-select "REPLACE THIS LINE WITH YOUR SOLUTION";
+WITH siblings(sib1, sib2)
+AS (
+  select p1.child as sib1, p2.child as sib2
+  FROM parents AS p1
+  JOIN parents AS p2
+  ON p1.parent = p2.parent
+  WHERE sib1 < sib2
+  )
+
+
 -- Expected output:
 --   barack and clinton are standard siblings
 --   abraham and grover are toy siblings
