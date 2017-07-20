@@ -1,4 +1,4 @@
-
+ 3
 create table parents as
   select "abraham" as parent, "barack" as child union
   select "abraham"          , "clinton"         union
