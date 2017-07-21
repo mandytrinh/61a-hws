@@ -84,6 +84,15 @@ AS (
   WHERE sib1 < sib2
   )
 
+SELECT sib1 || ' and ' || sib2 || ' are ' || d1.size || ' siblings ' 
+FROM dog_sizes as d1
+JOIN siblings
+ON sib1 = d1.name
+JOIN dog_sizes as d2
+ON sib2 = d2.name
+WHERE d1.size = d2.size
+;
+
 
 -- Expected output:
 --   barack and clinton are standard siblings
